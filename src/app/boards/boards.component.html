@@ -9,15 +9,15 @@
 >
   <!-- loop through app-boards -->
 
-  <div class="flex">
-    <div class="board" *ngFor="let board of boards">
       <app-board
+      cdkDrag
+      class="board"
+      *ngFor="let board of boards"
         [board]="board"
         (returnUID)="uidToDeleteTheBoard($event)"
         (updateLS)="updateLocalStorage()"
-      ></app-board>
-    </div>
-  </div>
+      >
+    </app-board>
 
   <br />
 </div>
@@ -26,7 +26,10 @@
     Add new Board
   </button>
 </div>
-<dialog id="board_create_modal" class="modal ">
+
+
+<!-- seperate all dialogs in seperate file -->
+<dialog id="board_create_modal" class="modal">
   <form method="dialog" class="modal-box bg-color">
     <button 
       (click)="resetDefault()"
