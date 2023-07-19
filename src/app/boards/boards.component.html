@@ -1,0 +1,68 @@
+<!-- Single Board -->
+<div class="bg-screen min-h-screen">
+<div
+  cdkDropListOrientation="horizontal"
+  cdkDropList
+  [cdkDropListData]="boards"
+  (cdkDropListDropped)="drop($event)"
+  class="boards"
+>
+  <!-- loop through app-boards -->
+
+  <div class="flex">
+    <div class="board" *ngFor="let board of boards">
+      <app-board
+        [board]="board"
+        (returnUID)="uidToDeleteTheBoard($event)"
+        (updateLS)="updateLocalStorage()"
+      ></app-board>
+    </div>
+  </div>
+
+  <br />
+</div>
+<div class="flex justify-center">
+  <button class="btn btn-success " onclick="board_create_modal.showModal()">
+    Add new Board
+  </button>
+</div>
+<dialog id="board_create_modal" class="modal ">
+  <form method="dialog" class="modal-box bg-color">
+    <button 
+      (click)="resetDefault()"
+    class="btn text-white btn-sm btn-circle btn-ghost absolute right-2 top-2">
+      ✕
+    </button>
+
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text text-white">Board Title?</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+        [(ngModel)]="newBoardName"
+        name="newBoardName"
+      />
+    </div>
+
+    <button class="btn btn-info px-10 text-white my-3" (click)="createBoard()">
+      Add
+    </button>
+  </form>
+</dialog>
+
+
+<dialog id="delete-board" class="modal">
+  <form method="dialog" class="modal-box bg-color text-white">
+    <p>Are you sure you want to delete this board?</p>
+    <div class="flex justify-end">
+      <button class="btn btn-success mr-4" (click)="removeBoard()">Yes</button>
+    <button class="btn btn-error" (click)="receivedUID = ''">No</button> 
+    </div>   
+  </form>
+
+</dialog>
+
+</div>

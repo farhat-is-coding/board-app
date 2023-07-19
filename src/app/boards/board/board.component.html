@@ -1,0 +1,144 @@
+<!-- board container -->
+<div cdkDrag>
+  <div class="text-white ml-4 cursor-grab" >
+    Drag me
+  </div>
+  <div
+    cdkDropListOrientation="vertical"
+    cdkDropList
+    [cdkDropListData]="board.items"
+    (cdkDropListDropped)="drop($event)"
+    class="flex flex-col bg-color glass tasks rounded-md p-2 px-3 mx-3 text-lg"
+  >
+    <div>
+      <div >
+        <h1 class="text-gray-100 text-xl font-bold">{{ board.title }}</h1>
+        <h1 class="text-gray-400 text-md">{{ board.uid.substring(0,18) }}</h1>
+      </div>
+      <!-- items conatiner -->
+      <div
+        cdkDrag
+        *ngFor="let item of board.items; let i = index"
+        class="inner-card rounded-md p-3 text-white"
+        [ngClass]="item.color ? 'bg-' + item.color + '-500' : ''"
+        (click)="openUpdateItemModal(item, i)"
+      >
+        {{ item.title }}
+      </div>
+  
+      <div class="flex justify-between">
+        <button class="btn btn-info w-1/4" (click)="openAddItemModal()">+</button>
+  
+        <button class="btn btn-error w-1/4" (click)="returnDeleteBoardUID()">-</button>
+      </div>    
+    </div>  
+  
+   
+  </div>
+</div>
+ 
+
+
+
+
+<dialog [id]="board.uid" class="modal">
+      <form method="dialog" class="modal-box bg-color">
+        <button (click)="resetDefault()" class="btn btn-sm text-white btn-circle btn-ghost absolute right-2 top-2">
+          ✕
+        </button>
+
+        <div class="form-control w-full max-w-xs">
+          <label class="label">
+            <span class="label-text text-white">Board Title?</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Type here"
+            class="input input-bordered w-full max-w-xs"
+            [(ngModel)]="newItemName"
+            name="newItemName"
+          />
+        </div>
+
+        <div class="flex">
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-blue-500"
+            [ngClass]="
+              newColor == 'blue' || newColor == ''
+                ? 'border-4 border-blue-600'
+                : ''
+            "
+            (click)="newColor = 'blue'"
+          ></div>
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-purple-500"
+            [ngClass]="newColor == 'purple' ? 'border-4 border-purple-600' : ''"
+            (click)="newColor = 'purple'"
+          ></div>
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-pink-500"
+            [ngClass]="newColor == 'pink' ? 'border-4 border-pink-600' : ''"
+            (click)="newColor = 'pink'"
+          ></div>
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-red-500"
+            [ngClass]="newColor == 'red' ? 'border-4 border-red-60' : ''"
+            (click)="newColor = 'red'"
+          ></div>
+
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-orange-500"
+            [ngClass]="newColor == 'orange' ? 'border-4 border-orange-600' : ''"
+            (click)="newColor = 'orange'"
+          ></div>
+
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-cyan-500"
+            [ngClass]="newColor == 'cyan' ? 'border-4 border-cyan-600' : ''"
+            (click)="newColor = 'cyan'"
+          ></div>
+
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-green-500"
+            [ngClass]="newColor == 'green' ? 'border-4 border-green-600' : ''"
+            (click)="newColor = 'green'"
+          ></div>
+
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-emerald-500"
+            [ngClass]="
+              newColor == 'emerald' ? 'border-4 border-emerald-600' : ''
+            "
+            (click)="newColor = 'emerald'"
+          ></div>
+
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-yellow-500"
+            [ngClass]="newColor == 'yellow' ? 'border-4 border-yellow-600' : ''"
+            (click)="newColor = 'yellow'"
+          ></div>
+
+          <div
+            class="w-8 cursor-pointer h-8 m-2 rounded-full bg-amber-500"
+            [ngClass]="newColor == 'amber' ? 'border-4 border-amber-600' : ''"
+            (click)="newColor = 'amber'"
+          ></div>
+        </div>
+
+        <button
+          class="btn btn-info"
+          (click)="!updateModal ? addItem() : updateItem()"
+        >
+          {{ !updateModal ? "Add" : "Update" }}
+      </button>
+        <span class="mx-5"></span>
+        <button
+          *ngIf="updateModal"
+          class="btn btn-error px-10"
+          (click)="deleteItem()"
+        >
+          -
+        </button>
+      </form>
+  
+</dialog>
